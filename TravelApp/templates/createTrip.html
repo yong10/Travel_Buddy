@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Add a Trip</title>
+</head>
+<body><br>
+    <div class="container">
+        <h4><a href="/travel">Home</a> | <a href="/logout">Logout</a></h4>
+        <h1>Add a Trip</h1>
+        <form action="/travel/add" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for ="destination">Destination</label>
+                <input type="text" name="destination" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for ="desc">Description</label> 
+                <input type="text" name="desc" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for ="start">Travel Date From</label>
+                <input type="date" name="start" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for ="end">Travel Date To</label> 
+                <input type="date" name="end" class="form-control">
+            </div>
+            <input type="submit" value="Add" class="btn btn-warning">
+        </form>
+        {% if messages %}
+        <ul class="messages">    
+            {% for message in messages %}    
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
