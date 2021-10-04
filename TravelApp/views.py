@@ -14,7 +14,7 @@ def addUser(request):
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect("/main")
+        return redirect("/")
     else:
         hash1 = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
         User.objects.create(name=request.POST['name'], user_name=request.POST['user_name'], password=hash1)
@@ -38,18 +38,18 @@ def logUser(request):
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect("/main")
+        return redirect("/")
     else:
         request.session['user'] = logged_user.id
         return redirect("/travel")
 
 def travel(request):
     if 'user' not in request.session:
-        return redirect("/main")
+        return redirect("/")
     context ={
         'travels': Travel.objects.filter(join=request.session['user']),
         'loggedin': User.objects.get(id=request.session['user']),
-        'allTravel': Travel.objects.all() 
+        'allTravel': Travel.objects.all()
     }
     return render(request, "travels.html", context)
 
@@ -58,7 +58,7 @@ def createTrip(request):
 
 def addTrip(request):
     if 'user' not in request.session:
-        return redirect("/main")
+        return redirect("/")
     errors = Travel.objects.travel_validator(request.POST)
 
     if len(errors) > 0:
@@ -70,6 +70,13 @@ def addTrip(request):
         Travel.objects.create(destination=request.POST['destination'], start=request.POST['start'], end=request.POST['end'], desc=request.POST['desc'], creator=u)
         return redirect('/travel')
 
+def deleteTrip(request, id):
+    if 'user' not in request.session:
+        return redirect("/")
+    else:
+        Travel.objects.get(id=id).delete()
+        return redirect('/travel')
+
 def travelInfo(request, id):
     context = {
         'travelinfo': Travel.objects.get(id = id),
@@ -79,15 +86,20 @@ def travelInfo(request, id):
 
 def join(request, id):
     if 'user' not in request.session:
-        return redirect("/main")
-    #How can I make people to join#
-    #t =Travel.objects.get(id = id)
-    #t.join.add(User.objects.get(id=request.session['user']))
+        return redirect("/")
     t =Travel.objects.get(id = id)
     u = User.objects.get(id=request.session['user'])
     u.join.add(t)
     return redirect('/travel')
 
+def leave(request, id):
+    if 'user' not in request.session:
+        return redirect("/")
+    t =Travel.objects.get(id = id)
+    u = User.objects.get(id=request.session['user'])
+    u.join.remove(t)
+    return redirect('/travel')
+
 def logout(request):
     request.session.clear()
-    return redirect('/main')
+    return redirect('/')

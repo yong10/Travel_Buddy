@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Travels</title>
     <style>
         .container{
             margin-top: 30px;
@@ -15,8 +16,7 @@
         }
         
         td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
+          border: 1px solid black;
           padding: 8px;
         }
         
@@ -27,19 +27,21 @@
             text-align: right;
         }
     </style>
-    <title>Travels</title>
 </head>
 <body>
 <div class="container">
-    <h3><a href="/logout">Logout</a></h3>
-    <h1>Hello, {{loggedin.user_name}}</h1><br>
-    <h4>Your Trip Schedules</h4>
+    <div class="row">
+        <h1 class="col">Hello, {{loggedin.user_name}}</h1><br>
+        <h3 class="col"><a href="/travel/create">Add Travel Plan</a> | <a href="/logout">Logout</a></h3>
+    </div>
+    <h4 class="my-3">Your Trip Schedules</h4>
     <table>
         <tr>
             <th>Destination</th>
             <th>Travel Start Date</th>
             <th>Travel End Date</th>
-            <th>Plan</th>
+            <th>Description</th>
+            <th>Do you want to Leave?</th>
         </tr>
         {% for x in allTravel %}
             {% if x.creator.id == loggedin.id %}
@@ -48,6 +50,7 @@
             <td>{{x.start}}</td>
             <td>{{x.end}}</td>
             <td>{{x.desc}}</td>
+            <td><a href="/travel/delete/{{x.id}}">Delete</a></td>
         </tr>
             {% endif %}
         {% endfor %}
@@ -58,11 +61,12 @@
             <td>{{x.start}}</td>
             <td>{{x.end}}</td>
             <td>{{x.desc}}</td>
+            <td><a href="/leave/{{x.id}}">Leave</a></td>
         </tr>
             {% endfor %}
         {% endif %}
-    </table><br>
-    <h4>Other User's Travel Plans</h4>
+    </table>
+    <h4 class="my-3">Other User's Travel Plans</h4>
     <table>
         <tr>
             <th>Name</th>
@@ -82,8 +86,7 @@
         </tr>
             {% endif %}
         {% endfor %}
-    </table><br>
-    <h3><a href="/travel/create">Add Travel Plan</a></h3>
+    </table>
 </div>
 </body>
 </html>

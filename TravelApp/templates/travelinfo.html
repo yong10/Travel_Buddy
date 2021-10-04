@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Info</title>
     <style>
-        p{
+        li{
             margin-left: 30px;
         }
     </style>
@@ -14,16 +14,17 @@
 <body>
     <div class="container"><br>
         <h4><a href="/travel">Home</a> | <a href="/logout">Logout</a></h4>
-        <h1>{{travelinfo.destination}}</h1>
+        <h1 class="mt-5">{{travelinfo.destination}}</h1>
         <h2>Planned By: {{travelinfo.creator.user_name}}</h2>
-        <h2>Travel Date From: {{travelinfo.start}}</h2>
-        <h2>Travel Date To: {{travelinfo.end}}</h2>
+        <h4>Travel Date From: {{travelinfo.start}}</h4>
+        <h4>Travel Date To: {{travelinfo.end}}</h4>
+        <h2>Description: {{travelinfo.desc}}</h2>
     </div><br>
     <div class="container">
         <h1>Other users' joining the trip:</h1>
         {% if others %}
             {% for other in others %}
-                <p>- {{other.user_name}}</p>
+                <h5><li>{{other.user_name}}</li></h5>
             {% endfor %}
         {% endif %}
 

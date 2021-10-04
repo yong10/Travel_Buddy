@@ -5,12 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Login and Register</title>
+    <style>
+        #Video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+        }
+        #info{
+            background-color: #fff;
+            margin-top:15%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container"><br>
-        <h1>Welcome!</h1><br><br>
+    <div class="container">
+        <video autoplay muted loop id="Video">
+            <source src="../static/videos/Beach.mp4" type="video/mp4">
+        </video>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md py-3" id="info">
                 <h1>Register</h1>
                 <form action="/addUser" method="POST">
                     {% csrf_token %}
@@ -41,7 +56,7 @@
                 </ul>
                 {% endif %}
             </div>
-            <div class="col-sm-6">
+            <div class="col-md py-3" id="info">
                 <h1>Log in</h1>
                 <form action="/logUser" method="POST">
                     {% csrf_token %}
